@@ -14,7 +14,7 @@ library(bslib)
 library(ggplot2)
 ```
 
-```{r data, echo=TRUE}
+```{r data, include = FALSE}
 url <- 'https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv'
 guns <- read_csv(url(url))
 ```
@@ -27,7 +27,7 @@ youth <- filter(guns, age <= 65)
 ```
 
 
-```{r summary, echo=FALSE}
+```{r summary, include = FALSE}
 #Get a summary of the youth dataset to better understand the data (you don’t need this to show in the output document)
 guns_youth <- summary(youth)
 print(guns_youth)
