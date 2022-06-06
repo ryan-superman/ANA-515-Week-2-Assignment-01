@@ -1,0 +1,54 @@
+---
+title: "ANA 515 Assignment 1"
+author: "Ryan Suparman"
+date: "June 5th 2022"
+output: 
+  html_document:
+    theme: journal
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(knitr)
+library(bslib)
+library(ggplot2)
+```
+
+```{r data, echo=TRUE}
+url <- 'https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv'
+guns <- read_csv(url(url))
+```
+
+
+```{r , include = FALSE}
+#Call the installed packages
+#Create a new dataset with the name of ‘youth’ from the dataset ‘gun_deaths’ that filters gun_deaths by age <= 65
+youth <- filter(guns, age <= 65)
+```
+
+
+```{r summary, echo=FALSE}
+#Get a summary of the youth dataset to better understand the data (you don’t need this to show in the output document)
+guns_youth <- summary(youth)
+print(guns_youth)
+```
+
+
+We have data about `r nrow(guns)` individuals killed by guns. 
+Only `r nrow(guns) - nrow(youth)` are older than 65. 
+The distribution of the remainder is shown below: 
+
+#Gun deaths by age
+```{r youth-dist, echo=FALSE}
+youth %>%
+  ggplot(aes(age)) +
+  geom_freqpoly(binwidth = 1)
+```
+
+#Gun deaths by race
+```{r race-dist, echo=FALSE}
+youth %>%
+  ggplot(aes(fct_infreq(race) %>% fct_rev())) +
+  geom_bar() + coord_flip() + 
+  labs(x = "Victim Race")
+```
